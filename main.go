@@ -3,13 +3,14 @@ package main
 import (
 	"log"
 
+	"github.com/Witor-Silva/primeiro-crud-go/src/configuration/logger"
 	"github.com/Witor-Silva/primeiro-crud-go/src/controlller/routes/controller/routes"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-
+	logger.Info("Aboiut to start user application")
 	err := godotenv.Load()
 
 	if err != nil {
