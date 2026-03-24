@@ -9,3 +9,7 @@ func (ud *userDomainService) FindUser(string) (
 	model.UserDomainInterface, *rest_err.RestErr) {
 	return nil, nil
 }
+func (ud *userDomainService) FindUserByID(id string) (
+	model.UserDomainInterface, *rest_err.RestErr) {
+	return nil, nil
+}
