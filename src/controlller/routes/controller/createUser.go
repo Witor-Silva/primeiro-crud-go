@@ -32,12 +32,7 @@ func (uc *userControllerInterface) CreateUser(c *gin.Context) {
 		return
 	}
 
-	domain := model.NewUserDomain(
-		userRequest.Email,
-		userRequest.Password,
-		userRequest.Name,
-		userRequest.Age,
-	)
+	domain := userRequest.ToDomain()
 
 	if err := uc.service.CreateUser(domain); err != nil {
 		c.JSON(err.Code, err)
