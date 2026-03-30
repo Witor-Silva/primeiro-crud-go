@@ -2,8 +2,7 @@ package model
 
 import (
 	"crypto/md5"
-	"encoding/json"
-	"fmt"
+	"encoding/hex"
 )
 
 type UserDomainInterface interface {
@@ -11,10 +10,10 @@ type UserDomainInterface interface {
 	GetPassword() string
 	GetAge() int8
 	GetName() string
+	GetID() string
 
 	SetID(string)
 
-	GetJSONValue() (string, error)
 	EncryptPassword()
 }
 
@@ -23,55 +22,47 @@ func NewUserDomain(
 	age int8,
 ) *userDomain {
 	return &userDomain{
-		Email:    email,
-		Password: password,
-		Name:     name,
-		Age:      age,
+		email:    email,
+		password: password,
+		name:     name,
+		age:      age,
 	}
-}
-
-func (ud *userDomain) SetID(id string) {
-	ud.ID = id
 }
 
 type userDomain struct {
-	ID       string
-	Email    string
-	Password string
-	Name     string
-	Age      int8
+	id       string
+	email    string
+	password string
+	name     string
+	age      int8
 }
 
-func (ud *userDomain) GetJSONValue() (string, error) {
-
-	b, err := json.Marshal(ud)
-	if err != nil {
-		fmt.Println(err)
-		return "", err
-	}
-	return string(b), nil
-
+func (ud *userDomain) GetID() string {
+	return ud.id
+}
+func (ud *userDomain) SetID(id string) {
+	ud.id = id
 }
 
 func (ud *userDomain) GetEmail() string {
-	return ud.Email
+	return ud.email
 }
 
 func (ud *userDomain) GetPassword() string {
-	return ud.Password
+	return ud.password
 }
 
 func (ud *userDomain) GetName() string {
-	return ud.Name
+	return ud.name
 }
 
 func (ud *userDomain) GetAge() int8 {
-	return ud.Age
+	return ud.age
 }
 
 func (ud *userDomain) EncryptPassword() {
 	hash := md5.New()
 	defer hash.Reset()
-	hash.Write([]byte(ud.Password))
-	ud.Password = string(hash.Sum(nil))
+	hash.Write([]byte(ud.password))
+	ud.password = hex.EncodeToString(hash.Sum(nil))
 }
